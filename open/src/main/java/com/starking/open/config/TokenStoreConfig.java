@@ -1,6 +1,7 @@
 package com.starking.open.config;
 
 import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.UUID;
@@ -40,9 +41,19 @@ public class TokenStoreConfig {
 	public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwtSource) {
 		return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwtSource);
 	}
+	
 
-	private KeyPair generateRsaKey() {
-		// TODO Auto-generated method stub
-		return null;
+	private static KeyPair generateRsaKey() {
+		KeyPair keyPair;
+
+		try {
+			KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+			keyPairGenerator.initialize(2048);
+			keyPair = keyPairGenerator.generateKeyPair();
+		} catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
+
+		return keyPair;
 	}
 }
