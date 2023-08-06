@@ -7,6 +7,8 @@ import java.util.UUID;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -32,6 +34,11 @@ public class TokenStoreConfig {
 				.build();
 		JWKSet jwtSet = new JWKSet(key);
 		return new ImmutableJWKSet<>(jwtSet);
+	}
+	
+	@Bean
+	public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwtSource) {
+		return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwtSource);
 	}
 
 	private KeyPair generateRsaKey() {
