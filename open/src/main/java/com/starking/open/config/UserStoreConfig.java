@@ -12,16 +12,14 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @Configuration
 public class UserStoreConfig {
 
-	@Bean
-	public UserDetailsService userDetailsService() {
-		var userDetailsManager = new InMemoryUserDetailsManager();
-		
-		userDetailsManager.createUser(
-				User.withUsername("admin")
-				.password("{noop}password")
-				.roles("USER")
-				.build());
-		
-		return userDetailsManager;
-	}
+	 @Bean
+	  public UserDetailsService userDetailsService() {
+	    var userDetailsManager = new InMemoryUserDetailsManager();
+	    userDetailsManager.createUser(
+	        User.withUsername("user")
+	            .password("{noop}password")
+	            .roles("USER")
+	            .build());
+	    return userDetailsManager;
+	  }
 }
